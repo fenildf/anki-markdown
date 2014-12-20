@@ -7,12 +7,8 @@ __license__ = "AGPL3"
 
 import markdown
 from anki.hooks import addHook
-from anki.utils import stripHTML
 from aqt.utils import showInfo
 
-
-def strip_html(html):
-    return str(stripHTML(html))
 
 # See how latex.py uses similar function for converting latex html
 # tags to appropriate images.
@@ -30,11 +26,9 @@ def render_markdown(html, type, fields, model, data, col):
 
     Returns the modified/rendered HTML.
     """
-    before = "Before md: " + html
-    after = "After md: " + markdown.markdown(strip_html(html))
-    showInfo(before)
-    showInfo(after)
-    return html
+    html.replace("<br>", "\n")
+    after = markdown.markdown(html)
+    return after
     # should grab source text
 
 # Hook our function to mungeQA filter which contains the generated HTML for
